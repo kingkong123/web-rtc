@@ -8,6 +8,7 @@ const constraints = {
 };
 
 const video = document.querySelector('video');
+const div = document.querySelector('div');
 
 const handleSuccess = (stream) => {
   try {
@@ -15,8 +16,8 @@ const handleSuccess = (stream) => {
     window.stream = stream; // make stream available to browser console
     video.srcObject = stream;
     console.log('track', track);
-    console.log('getCapabilities()', track.getCapabilities());
-    console.log('getConstraints()', track.getConstraints());
+    console.log('getCapabilities()', track.getCapabilities && track.getCapabilities());
+    console.log('getConstraints()', track.getConstraints && track.getConstraints());
     console.log('getSettings()', track.getSettings());
 
     const result = {
@@ -66,6 +67,7 @@ const getMediaAsync = async () => {
   });
 
   if (backCameras.length > 0) {
+    div.innerHTML = `Number of back cameras: ${backCameras.length}`;
     let idx = 0;
 
     let streamSettings = await getMedia(backCameras[idx]);
@@ -79,6 +81,7 @@ const getMediaAsync = async () => {
       console.log('streamSettings', streamSettings);
     }
   } else {
+    div.innerHTML = 'Only 1 camera found';
     await getMedia();
   }
 }
