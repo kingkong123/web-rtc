@@ -32,8 +32,10 @@ const handleError = (error) => {
 }
 
 navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+  // request for camera permission, and stop the stream after permission granted
   stream.getVideoTracks()[0].stop();
 
+  // start camera handling
   getMediaAsync();
 });
 
@@ -65,10 +67,13 @@ const getMediaAsync = async () => {
     div.innerHTML = `Number of back cameras: ${backCameras.length}`;
     let idx = 0;
 
+    // if more than 1 back camera found, start stream with camera ID
     let streamSettings = await getMedia(backCameras[idx]);
 
+    // when tap/clicked on the video Dom, swap the cameras
     video.onclick = async () => {
       idx++;
+      // need to stop stream before switching camera
       streamSettings.track.stop();
 
       streamSettings = await getMedia(backCameras[idx % backCameras.length]);
@@ -78,3 +83,4 @@ const getMediaAsync = async () => {
     await getMedia();
   }
 }
+
