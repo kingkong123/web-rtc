@@ -66,7 +66,7 @@ const getMediaAsync = async () => {
     return kind === TYPE_VIDEO && label.toLowerCase().includes('back');
   });
 
-  if (backCameras.length > 0) {
+  if (backCameras.length > 1) {
     div.innerHTML = `Number of back cameras: ${backCameras.length}`;
     let idx = 0;
 
